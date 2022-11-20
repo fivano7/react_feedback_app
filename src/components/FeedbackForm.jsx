@@ -15,7 +15,7 @@ function FeedbackForm() {
     useContext(FeedbackContext);
 
   useEffect(() => {
-    if (currentlyEditedFeedback.edit == true) {
+    if (currentlyEditedFeedback.edit === true) {
       setBtnDisabled(false);
       setText(currentlyEditedFeedback.item.text);
       setRating(currentlyEditedFeedback.item.rating);
@@ -50,7 +50,7 @@ function FeedbackForm() {
       };
 
       //currently edited item već u sebi ima ID
-      if (currentlyEditedFeedback.edit == true) {
+      if (currentlyEditedFeedback.edit === true) {
         updateFeedbackItem(currentlyEditedFeedback.item.id, newFeedback);
       } else {
         addFeedback(newFeedback);

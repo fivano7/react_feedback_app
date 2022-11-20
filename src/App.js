@@ -2,7 +2,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  NavLink,
+  // NavLink,
 } from "react-router-dom";
 import Header from "./components/Header";
 import FeedbackList from "./components/FeedbackList";
@@ -12,7 +12,7 @@ import AboutPage from "./pages/AboutPage";
 import AboutIconLink from "./components/AboutIconLink";
 import Post from "./components/Post";
 import Post2 from "./components/Post2";
-import Card from "./components/shared/Card";
+// import Card from "./components/shared/Card";
 import { FeedbackProvider } from "./context/FeedbackContext";
 
 function App() {
