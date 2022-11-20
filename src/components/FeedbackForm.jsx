@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import Card from "./shared/Card";
 import Button from "./shared/Button";
 import RatingSelect from "./RatingSelect";
+import FeedbackContext from "../context/FeedbackContext";
 
 //bitno razlikovat rating ovdje i selected unutar RatingSelect
-function FeedbackForm({handleAdd}) {
+function FeedbackForm() {
   const [text, setText] = useState("");
   const [rating, setRating] = useState(10);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState("");
+
+  const { addFeedback, currentlyEditedFeedback, updateFeedbackItem } =
+    useContext(FeedbackContext);
+
+  useEffect(() => {
+    if (currentlyEditedFeedback.edit == true) {
+      setBtnDisabled(false);
+      setText(currentlyEditedFeedback.item.text);
+      setRating(currentlyEditedFeedback.item.rating);
+    }
+  }, [currentlyEditedFeedback]);
 
   const handleTextChange = (e) => {
     if (text === "") {
@@ -36,13 +48,16 @@ function FeedbackForm({handleAdd}) {
         text: text,
         rating: rating,
       };
-      
-      handleAdd(newFeedback)
-      setText("")
 
+      //currently edited item već u sebi ima ID
+      if (currentlyEditedFeedback.edit == true) {
+        updateFeedbackItem(currentlyEditedFeedback.item.id, newFeedback);
+      } else {
+        addFeedback(newFeedback);
+      }
+
+      setText("");
     }
-
-    
   };
 
   return (

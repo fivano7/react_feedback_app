@@ -1,5 +1,3 @@
-import { useState, useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
 import {
   BrowserRouter as Router,
   Route,
@@ -7,7 +5,6 @@ import {
   NavLink,
 } from "react-router-dom";
 import Header from "./components/Header";
-import FeedbackData from "./data/FeedbackData";
 import FeedbackList from "./components/FeedbackList";
 import FeedbackStats from "./components/FeedbackStats";
 import FeedbackForm from "./components/FeedbackForm";
@@ -19,21 +16,8 @@ import Card from "./components/shared/Card";
 import { FeedbackProvider } from "./context/FeedbackContext";
 
 function App() {
-  const [feedback, setFeedback] = useState(FeedbackData);
-
-  const deleteFeedback = (id) => {
-    if (window.confirm("Are you sure you want to delete?")) {
-      //vraća array bez onoga što deletamo
-      setFeedback(feedback.filter((item) => item.id !== id));
-    }
-  };
-
-  const addFeedback = (newFeedback) => {
-    newFeedback.id = uuidv4();
-    setFeedback([newFeedback, ...feedback]);
-  };
-
   return (
+    <FeedbackProvider>
       <Router>
         <Header text="Feedback UI" />
         <div className="container">
@@ -43,12 +27,9 @@ function App() {
               path="/"
               element={
                 <>
-                  <FeedbackForm handleAdd={addFeedback} />
-                  <FeedbackStats feedback={feedback} />
-                  <FeedbackList
-                    feedback={feedback}
-                    handleDelete={deleteFeedback}
-                  />
+                  <FeedbackForm />
+                  <FeedbackStats />
+                  <FeedbackList />
                 </>
               }
             />
@@ -56,11 +37,10 @@ function App() {
             <Route path="/about" element={<AboutPage />} />
 
             {/* http://localhost:3000/post/3/pero - kad unesemo taj link vrati nam Post component sa tim podacima u linku preko GET-a*/}
-            <Route path="/post/:id/:name" element={<Post/>}/>
+            <Route path="/post/:id/:name" element={<Post />} />
 
-              {/* *-omogućava dodavanje drugih ruta poslije /post2/ */}
-            <Route path="/post2/*" element={<Post2/>}/>
-            
+            {/* *-omogućava dodavanje drugih ruta poslije /post2/ */}
+            <Route path="/post2/*" element={<Post2 />} />
           </Routes>
 
           {/* <Card>
@@ -75,6 +55,7 @@ function App() {
           <AboutIconLink />
         </div>
       </Router>
+    </FeedbackProvider>
   );
 }
 

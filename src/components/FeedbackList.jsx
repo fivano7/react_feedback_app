@@ -1,8 +1,12 @@
 import FeedbackItem from "./FeedbackItem";
 import { motion, AnimatePresence } from "framer-motion";
-import PropTypes from "prop-types";
+import { useContext } from "react";
+import FeedbackContext from "../context/FeedbackContext";
 
-function FeedbackList({ feedback, handleDelete }) {
+function FeedbackList() {
+  //imamo pristup svemu što je u FeedbackContext.Provider value parametru
+  const {feedback} = useContext(FeedbackContext)
+
   if (!feedback || feedback.length === 0) {
     return <p>No Feedback Yet</p>;
   }
@@ -16,7 +20,6 @@ function FeedbackList({ feedback, handleDelete }) {
             <FeedbackItem
               key={item.id}
               item={item}
-              handleDelete={handleDelete}
             />
           </motion.div>
         ))}
@@ -31,22 +34,10 @@ function FeedbackList({ feedback, handleDelete }) {
   //       <FeedbackItem
   //         key={item.id}
   //         item={item}
-  //         handleDelete={handleDelete}
   //       />
   //     ))}
   //   </div>
   // );
 }
-
-FeedbackList.propTypes = {
-  // feedback: PropTypes.array, -> može ovako, a može i eksplicitno ovo ispod
-  feedback: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-    })
-  ),
-};
 
 export default FeedbackList;
