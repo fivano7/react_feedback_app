@@ -1,7 +1,8 @@
 #Feedback_app
 
 ##Pokretanje
-npm run dev
+- git klonirat backend_included branch!
+- npm run dev
 
 ##Ako ne radi
 - "proxy": "http://192.168.0.30:5000" promjenit u http://localhost:5000 i isto tako u
